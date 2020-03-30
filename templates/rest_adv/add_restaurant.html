@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% extends 'rest_adv/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Add New Restaurant
+{% endblock %}
+
+{% block body_block %}
+    <h1>Add Restaurant</h1>
+        <form id="restaurant_form" method="post" action="{% url 'rest_adv:add_restaurant' %}"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="">Name</label>
+            <input name="name" class="l-profile__name m-profile__name form-control" type="text">
+            <label for="">Slug</label>
+            <input name="slug" class="l-profile__name m-profile__name form-control" type="text">
+            <!-- <label for="">Rate</label>
+            <input name="rate" type="text " class="m-add-review__starrating " value="{{review.rate}} " data-size="sm "> -->
+            <label for="">Category</label>
+            <select name="category" class="form-control">
+                <option>Bar</option>
+                <option>Burger</option>
+                <option>British</option>
+                <option>Cafe</option>
+                <option>Chinese</option>
+                <option>Indian</option>
+                <option>Italian</option>
+                <option>Japanese</option>
+                <option>Pizza</option>
+                <option>Seafood</option>
+                <option>Steakhouse</option>
+            </select>
+            <label for="">Intro</label>
+            <textarea name="intro" class="l-profile__name m-profile__name form-control" rows="3"></textarea>
+
+            <label for="">Picture</label>
+            <input type="file" name="picture">
+
+            <!-- Provide a button to click to submit the form. -->
+            <input type="submit" name="submit" value="Submit" />
+        </form>
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript ">
+    $(".m-add-review__starrating ").rating({
+        min: 1,
+        max: 5,
+        step: 1,
+        // size: 'lg',
+        starCaptions: function(val) {
+            return val + ' stars';
+        }
+    });
+</script>
+{% endblock %}

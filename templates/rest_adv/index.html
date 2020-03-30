@@ -1,0 +1,316 @@
+{% extends 'rest_adv/base.html' %} {% load staticfiles %} {% block title_block %} Login {% endblock %} {% block css_block %}
+<style>
+    .m-advertise__carousel {
+        height: 400px;
+    }
+    
+    .carousel-inner>.item>a>img {
+        width: 100%;
+        height: 400px;
+    }
+    
+    .carousel-caption {
+        /* font-size: 32px;
+        padding: 10px; */
+    }
+    /* category */
+    
+    .category {
+        /* background-color: violet; */
+    }
+    
+    .l-category__title {
+        margin-bottom: 10px;
+    }
+    
+    .m-category__title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    
+    .l-category__ul {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .m-category__ul {
+        list-style: none;
+    }
+    
+    .m-category__li {
+        padding: 5px 0;
+        list-style: none;
+    }
+    
+    .m-category__a {
+        color: black;
+        font-size: 16px;
+    }
+    
+    .m-category__a:hover {
+        color: black;
+    }
+    /* category */
+    
+    .advertise {
+        /* margin: 10px; */
+        background-color: yellowgreen;
+    }
+    /* restaurant list */
+    
+    .l-restaurant-list__ul {
+        padding: 10px 0;
+        margin: 0;
+    }
+    
+    .m-restaurant-list__ul {
+        list-style: none;
+    }
+    
+    .l-restaurant-list__li {
+        background-color: ivory;
+        display: flex;
+        /* justify-content: space-between; */
+        align-items: center;
+        height: 200px;
+    }
+    
+    .m-restaurant-list__li {
+        list-style: none;
+    }
+    
+    .m-restaurant-list__coverimg {
+        width: 250px;
+        height: 200px;
+    }
+    
+    .l-restaurant-list__description {
+        padding: 20px;
+    }
+    
+    .m-restaurant-list__description {}
+    
+    .l-restaurant-list__title {
+        margin-bottom: 10px;
+    }
+    
+    .m-restaurant-list__title {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .m-restaurant-list__title>a {
+        color: black;
+    }
+
+    .m-restaurant-list__title>a:hover {
+        color: black;
+    }
+    
+    .m-restaurant-list__p {
+        font-size: 16px;
+        /* color:; */
+        width: 100%;
+        /* overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: normal; */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
+    /* restaurant list */
+    /* mostliked */
+    
+    .m-mostliked {
+        /* background-color: green; */
+    }
+    
+    .l-mostliked__title {
+        margin-bottom: 10px;
+    }
+    
+    .m-mostliked__title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    
+    .l-mostliked__ul {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .m-mostliked__ul {
+        list-style: none;
+    }
+    
+    .m-mostliked__li {
+        list-style: none;
+        height: 100px;
+        padding: 10px;
+        background-size: 100% 100%;
+    }
+    
+    .m-mostliked__ultitle {
+        font-size: 16px;
+        color: honeydew;
+        font-weight: bold;
+    }
+    .m-mostliked__ultitle>a {
+        font-size: 16px;
+        color: honeydew;
+        font-weight: bold;
+    }
+    .m-mostliked__ultitle>a:hover {
+        font-size: 16px;
+        color: honeydew;
+        font-weight: bold;
+    }
+    
+    .m-mostliked__starrating {}
+    
+    .m-mostliked__a {
+        color: black;
+        font-size: 16px;
+    }
+    
+    .m-mostliked__a:hover {
+        color: black;
+    }
+    /* mostliked */
+</style>
+{% endblock %} {% block body_block %}
+
+
+<div class="col-md-2">
+    <div class="category">
+        <div class="m-category__title l-category__title">
+            Categories
+        </div>
+        <ul class="l-category__ul m-category__ul">
+            <li class="l-category__li m-category__li"><a href="{% url 'rest_adv:category_restaurant' "Burger" %}" class="m-category__a">Burger</a></li>
+            <li class="l-category__li m-category__li"><a href="{% url 'rest_adv:category_restaurant' "British" %}" class="m-category__a">British</a></li>
+            <li class="l-category__li m-category__li"><a href="{% url 'rest_adv:category_restaurant' "Cafe" %}" class="m-category__a">Cafe</a></li>
+            <li class="l-category__li m-category__li"><a href="{% url 'rest_adv:category_restaurant' "Chinese" %}" class="m-category__a">Chinese</a></li>
+            <li class="l-category__li m-category__li"><a href="{% url 'rest_adv:category_restaurant' "Indian" %}" class="m-category__a">Indian</a></li>
+            <li class="l-category__li m-category__li"><a href="{% url 'rest_adv:category_restaurant' "Italian" %}" class="m-category__a">Italian</a></li>
+            <li class="l-category__li m-category__li"><a href="{% url 'rest_adv:category_restaurant' "Japanese" %}" class="m-category__a">Japanese</a></li>
+            <li class="l-category__li m-category__li"><a href="{% url 'rest_adv:category_restaurant' "Pizza" %}" class="m-category__a">Pizza</a></li>
+        </ul>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="advertise">
+        <div id="carousel-example-generic" class="m-advertise__carousel carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                {% for top_restaurant in top_restaurants %}
+                
+                {% if top_restaurant == first_restaurant %}
+                <div class="item active">
+                {% else %}
+                <div class="item">
+                {% endif %}
+                    <a href="{% url 'rest_adv:show_restaurant' top_restaurant.slug %}">
+                        {% if top_restaurant.picture %}
+                        <img src={{top_restaurant.picture.url}} class="d-block w-100 m-carousel-image" alt="Lorem Ipsum Dolor Sample Text">
+                        {% else %}
+                        <img src={% static "images/1.jpeg" %} class="d-block w-100 m-carousel-image" alt="Lorem Ipsum Dolor Sample Text">
+                        {% endif %}
+                    </a>
+                    <div class="carousel-caption">
+                        <h3>{{top_restaurant.name}}</h3>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <div class="l-restaurant-list m-restaurant-list">
+        <ul class="l-restaurant-list__ul m-restaurant-list__ul">
+            {% for restaurant in restaurants %}
+            <li class="l-restaurant-list__li m-restaurant-list__li">
+                <div class="l-restaurant-list__cover m-restaurant-list__cover">
+                    {% if restaurant.picture %}
+                    <img class="m-restaurant-list__coverimg" src={{restaurant.picture.url}} alt="...">
+                    {% else %}
+                    <img class="m-restaurant-list__coverimg" src={% static "images/2.jpeg" %} alt="...">
+                    {% endif %}
+                </div>
+                <div class="l-restaurant-list__description m-restaurant-list__description">
+                    <div class="l-restaurant-list__title m-restaurant-list__title">
+                        <a href="{% url 'rest_adv:show_restaurant' restaurant.slug %}">
+                            {{restaurant.name}}
+                        </a>
+                    </div>
+                    <input type="text" class="m-mostliked__starrating" value="{{restaurant.rate}}" data-size="sm">
+                    <div class="l-restaurant-list__p m-restaurant-list__p">{{restaurant.intro}}</div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="m-mostliked l-mostliked">
+        <div class="m-mostliked__title l-mostliked__title">
+            Most Liked
+        </div>
+        <ul class="l-mostliked__ul m-mostliked__ul">
+            {% for top_restaurant in top_restaurants %}
+
+            {% if top_restaurant.picture %}
+            <li class="l-mostliked__li m-mostliked__li" style="background-image: url({{top_restaurant.picture.url}})">
+            {% else %}
+            <li class="l-mostliked__li m-mostliked__li" style="background-image: url({% static 'images/1.jpeg' %})">
+            {% endif %}
+                <div class="l-mostliked__ultitle m-mostliked__ultitle">
+                    <a href="{% url 'rest_adv:show_restaurant' top_restaurant.slug %}">
+                        {{top_restaurant.name}}
+                    </a>
+                </div>
+                <input type="text" class="m-mostliked__starrating" value="{{top_restaurant.rate}}" data-size="xs">
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %} {% block js_block %}
+<script type="text/javascript ">
+    $('.carousel').carousel({
+        interval: 2000
+    })
+
+    $(".m-mostliked__starrating").rating({
+        min: 1,
+        max: 5,
+        // step: 1,
+        // size: 'lg',
+        readonly: true,
+        displayOnly: true,
+        hoverEnabled: false,
+        starCaptions: function(val) {
+            return val + ' stars';
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% extends 'rest_adv/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block css_block %}
+<style>
+    .l-register {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+{% endblock %}
+
+{% block body_block %}
+    <div class="l-register m-register">
+        <h1>Register for Restaurant Advisor</h1>
+        {% if registered %}
+            <strong>Thank you for registering!</strong>
+            <a href="{% url 'rest_adv:index' %}">Return to the homepage.</a><br />
+        {% else %}
+            <br />
+            <form id="user_form" method="post" action="{% url 'rest_adv:register' %}"
+                  enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+    
+            <!-- Display each form -->
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+    
+                <!-- Provide a button to click to submit the form. -->
+            <input class="btn btn-default" type="submit" name="submit" value="Register" />
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

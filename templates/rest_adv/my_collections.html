@@ -1,0 +1,141 @@
+{% extends 'rest_adv/base.html' %} {% load staticfiles %} {% block title_block %} Login {% endblock %} {% block css_block %}
+<style>
+    /* left */
+    
+    .l-profile__left{
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+    .m-profile__left{
+        background-color: white;
+    }
+    .l-sidebar__a {
+        margin-bottom: 16px;
+    }
+    .m-sidebar__a {
+        display: block;
+        font-size: 24px;
+        font-weight: bold;
+        color: black;
+    }
+    .m-sidebar__a:hover {
+        color: black;
+    }
+    /* left */
+    /* right */
+/* restaurant list */
+    
+.l-restaurant-list__ul {
+        padding: 10px 0;
+        margin: 0;
+    }
+    
+    .m-restaurant-list__ul {
+        list-style: none;
+    }
+    
+    .l-restaurant-list__li {
+        background-color: ivory;
+        display: flex;
+        /* justify-content: space-between; */
+        align-items: center;
+        height: 200px;
+    }
+    
+    .m-restaurant-list__li {
+        list-style: none;
+    }
+    
+    .m-restaurant-list__coverimg {
+        width: 250px;
+        height: 200px;
+    }
+    
+    .l-restaurant-list__description {
+        padding: 20px;
+    }
+    
+    .m-restaurant-list__description {}
+    
+    .l-restaurant-list__title {
+        margin-bottom: 10px;
+    }
+    
+    .m-restaurant-list__title {
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .m-restaurant-list__p {
+        font-size: 16px;
+        /* color:; */
+        width: 100%;
+        /* overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: normal; */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
+    
+    .l-restaurant-list__ul {}
+    
+    .l-restaurant-list__ul {}
+    
+    .l-restaurant-list__ul {}
+    /* restaurant list */
+
+    /* right */
+</style>
+{% endblock %} {% block body_block %}
+<div class="col-md-3">
+    <div class="l-profile__left m-profile__left">
+        <a class="m-sidebar__a l-sidebar__a" href="{% url 'rest_adv:my_profile' %}">My Info</a>
+        <a class="m-sidebar__a l-sidebar__a" href="{% url 'rest_adv:my_collections' %}">My Collections</a>
+        <a class="m-sidebar__a l-sidebar__a" href="{% url 'rest_adv:my_reviews' %}">My Reviews</a>
+    </div>
+</div>
+<div class="col-md-9">
+    <div class="l-restaurant-list m-restaurant-list">
+        <ul class="l-restaurant-list__ul m-restaurant-list__ul">
+            {% for restaurant in restaurants %}
+            <li class="l-restaurant-list__li m-restaurant-list__li">
+                <div class="l-restaurant-list__cover m-restaurant-list__cover">
+                    {% if restaurant.picture %}
+                    <img class="m-restaurant-list__coverimg" src={{restaurant.picture.url}} alt="...">
+                    {% else %}
+                    <img class="m-restaurant-list__coverimg" src={% static "images/2.jpeg" %} alt="...">
+                    {% endif %}
+                </div>
+                <div class="l-restaurant-list__description m-restaurant-list__description">
+                    <div class="l-restaurant-list__title m-restaurant-list__title">{{restaurant.name}}</div>
+                    <input type="text" class="m-mostliked__starrating" value="{{restaurant.rate}}" data-size="sm">
+                    <div class="l-restaurant-list__p m-restaurant-list__p">{{restaurant.intro}}</div>
+
+                </div>
+
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+</div>
+
+{% endblock %} {% block js_block %}
+<script type="text/javascript ">
+    $(".m-mostliked__starrating").rating({
+        min: 1,
+        max: 5,
+        // step: 1,
+        // size: 'lg',
+        readonly: true,
+        displayOnly: true,
+        hoverEnabled: false,
+        starCaptions: function(val) {
+            return val + ' stars';
+        }
+    });
+</script>
+{% endblock %}

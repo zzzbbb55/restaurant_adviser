@@ -1,0 +1,24 @@
+<ul>
+    <div class="card" style="width: 100%;margin:10px;">
+        <h4 style="margin:10px;">Reviews</h4>
+        <div class="card-body">
+            <div class="Userdetail" style="width:35%">
+                {% if user.profile.picture %}
+                    <img src="{{ user.profile.picture.url }}" height="200" width="150"/>
+                {% endif %}
+                <p>{{user.username}}</p>
+            </div>
+            <div style="float:Right; width:60%;">
+                <div>
+                    <p>{{review.rate}}</p>
+                    <p>{{review.message}}</p>
+                </div>
+                <div id="time">
+                    <p>19-3-2020 2:03</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+</ul>

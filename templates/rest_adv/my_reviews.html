@@ -1,0 +1,168 @@
+{% extends 'rest_adv/base.html' %} {% load staticfiles %} {% block title_block %} Login {% endblock %} {% block css_block %}
+<style>
+    /* left */
+    
+    .l-profile__left{
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+    .m-profile__left{
+        background-color: white;
+    }
+    .l-sidebar__a {
+        margin-bottom: 16px;
+    }
+    .m-sidebar__a {
+        display: block;
+        font-size: 24px;
+        font-weight: bold;
+        color: black;
+    }
+    .m-sidebar__a:hover {
+        color: black;
+    }
+    /* left */
+
+    /* review list */
+    
+    .l-review-list__ul {
+        padding: 10px 0;
+        margin: 0;
+    }
+    
+    .m-review-list__ul {
+        list-style: none;
+    }
+    
+    .l-review-list__li {
+        background-color: white;
+        display: flex;
+        /* justify-content: space-between; */
+        align-items: center;
+        height: 160px;
+        margin-bottom: 2px;
+    }
+    
+    .m-review-list__li {
+        list-style: none;
+    }
+    
+    .l-review-list__left {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .m-review-list__left {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .m-review-list__coverimg {
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+    }
+    
+    .l-review-list__username {}
+    
+    .m-review-list__username {
+        font-size: 16px;
+        font-weight: bolder;
+    }
+    
+    .l-review-list__description {
+        padding: 10px 20px;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: space-between; */
+    }
+    
+    .m-review-list__description {
+        height: 100%;
+    }
+    
+    .l-review-list__title {
+        margin-bottom: 10px;
+    }
+    
+    .m-review-list__title {
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .m-review-list__p {
+        font-size: 16px;
+        /* color:; */
+        width: 100%;
+        /* overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: normal; */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
+    
+    .l-review-list__ul {}
+    
+    .l-review-list__ul {}
+    
+    .l-review-list__ul {}
+    /* review list */
+</style>
+{% endblock %} {% block body_block %}
+<div class="col-md-3">
+    <div class="l-profile__left m-profile__left">
+        <a class="m-sidebar__a l-sidebar__a" href="{% url 'rest_adv:my_profile' %}">My Info</a>
+        <a class="m-sidebar__a l-sidebar__a" href="{% url 'rest_adv:my_collections' %}">My Collections</a>
+        <a class="m-sidebar__a l-sidebar__a" href="{% url 'rest_adv:my_reviews' %}">My Reviews</a>
+    </div>
+</div>
+<div class="col-md-9">
+    <div class="l-review-list m-review-list ">
+        <ul class="l-review-list__ul m-review-list__ul ">
+            {% for review in reviews %}
+            <li class="l-review-list__li m-review-list__li ">
+                <div class="m-review-list__left l-review-list__left ">
+                    <div class="l-review-list__cover m-review-list__cover ">
+                        {% if review.restaurant.picture %}
+                        <img class="m-review-list__coverimg " src={{review.restaurant.picture.url}} alt="... "> {% else %}
+                        <img src={% static "images/3.jpeg " %} class="m-review-list__coverimg alt=" Lorem Ipsum Dolor Sample Text "> {% endif %}
+                    </div>
+                    <div class="l-review-list__username m-review-list__username">
+                        {{review.restaurant.name}}
+                    </div>
+                </div>
+                <div class="l-review-list__description m-review-list__description ">
+                    <div class="l-review-list__title m-review-list__title ">{{review.name}}</div>
+                    <input type="text " class="m-mostliked__starrating " value="{{review.rate}} " data-size="sm ">
+                    <div class="l-reivew-list__createat m-reivew-list__createat">Reviewed at {{review.createdAt}}</div>
+                    <div class="l-review-list__p m-review-list__p ">{{review.message}}</div>
+                </div>
+            </li>
+            {% endfor %}
+            </ul>
+        </div>
+</div>
+</div>
+
+{% endblock %} {% block js_block %}
+<script type="text/javascript ">
+    $(".m-mostliked__starrating").rating({
+        min: 1,
+        max: 5,
+        // step: 1,
+        // size: 'lg',
+        readonly: true,
+        displayOnly: true,
+        hoverEnabled: false,
+        starCaptions: function(val) {
+            return val + ' stars';
+        }
+    });
+</script>
+{% endblock %}

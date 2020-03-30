@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<meta name="google-signin-client_id" content="329317736900-nm6iha5dj81ochq5tjm4je4vn5nehmrh.apps.googleusercontent.com">
+
+{% extends 'rest_adv/base.html' %} {% load staticfiles %} {% block title_block %} Login {% endblock %} {% block body_block %}
+
+{% block css_block %}
+<style>
+
+</style>
+{% endblock %}
+
+
+<!-- <button type="button" onclick="signOut();">Sign out</button> -->
+
+<div class="l-login m-login">
+    <h1 class="l-login__h1 m-login__h1">Login to Restaurant Adviser</h1>
+    {% if message %}
+    <div class="alert alert-danger" role="alert">{{message}}</div>
+    {% endif %}
+    <form class="l-login__form m-login__form" id="login_form" method="post" action="{% url 'rest_adv:login' %}">
+        {% csrf_token %}
+        <label for="" class="l-login__label m-login__label" >Username</label>
+        <input class="form-control" type="text" name="username" value="" size="50" />
+        <label for="" class="l-login__label m-login__label" >Password</label>
+        <input class="form-control" type="password" name="password" value="" size="50" />
+        <input class="btn btn-default" type="submit" value="submit" style="display:  inline-block" />
+    </form>
+    <button id="customBtn" type="button" class="btn btn-danger" style="display:  inline-block" >Login By Google</button>
+    <!-- <div id="my-signin2"></div> -->
+    <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+</div>
+{% endblock %}
+
+{% block js_block %}
+<script src="https://apis.google.com/js/api:client.js"></script>
+<script>
+    var googleUser = {};
+    var startApp = function() {
+        gapi.load('auth2', function() {
+            auth2 = gapi.auth2.init({
+                client_id: '329317736900-nm6iha5dj81ochq5tjm4je4vn5nehmrh.apps.googleusercontent.com', //客户端ID
+                cookiepolicy: 'single_host_origin',
+                scope: 'profile' //可以请求除了默认的'profile' and 'email'之外的数据
+            });
+            attachSignin(document.getElementById('customBtn'));
+        });
+    };
+
+    function attachSignin(element) {
+
+        auth2.attachClickHandler(element, {},
+            function(googleUser) {
+                let profile = auth2.currentUser.get().getBasicProfile();
+
+
+                console.log('ID: ' + profile.getId());
+                console.log('Full Name: ' + profile.getName());
+                console.log('Given Name: ' + profile.getGivenName());
+                console.log('Family Name: ' + profile.getFamilyName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail());
+
+                // register and login
+                let csrf = $('input[name="csrfmiddlewaretoken"]').val();
+                console.log('saving restaurant ...');
+                let url = "{% url 'rest_adv:login_by_google' %}"
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'csrfmiddlewaretoken': csrf,
+                        'google_id': profile.getId(),
+                        'google_email': profile.getEmail(),
+                        'google_profile_url': profile.getImageUrl(),
+                        'google_first_name': profile.getGivenName(),
+                        'google_last_name': profile.getFamilyName(),
+                    },
+                    type: 'post',
+                    cache: false,
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data);
+                        alert(data.data);
+                        console.log($('#index-a'));
+                        $('#index-a')[0].click();
+                    },
+                    error: function() {
+                        // view("异常！");    
+                        alert("Error!");
+                    }
+                });
+            },
+            function(error) {
+                console.log(JSON.stringify(error, undefined, 2));
+            });
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    // function renderButton() {
+    //   gapi.signin2.render('my-signin2', {
+    //     'scope': 'profile email',
+    //     'width': 240,
+    //     'height': 50,
+    //     'longtitle': true,
+    //     'theme': 'dark',
+    //     'onsuccess': onSuccess,
+    //     'onfailure': onFailure
+    //   });
+    // }
+
+    // function attachSignin(element) {
+    //     auth2.attachClickHandler(element, {},
+    //         function(googleUser) {
+    //             var profile = auth2.currentUser.get().getBasicProfile();
+
+    //             console.log('ID: ' + profile.getId());
+    //             console.log('Full Name: ' + profile.getName());
+    //             console.log('Given Name: ' + profile.getGivenName());
+    //             console.log('Family Name: ' + profile.getFamilyName());
+    //             console.log('Image URL: ' + profile.getImageUrl());
+    //             console.log('Email: ' + profile.getEmail());
+
+                
+    //         },
+    //         function(error) {
+    //             console.log(JSON.stringify(error, undefined, 2));
+    //         });
+    // }
+    startApp();
+
+    //注销
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function() {
+            alert('用户注销成功');
+        });
+    }
+
+</script>
+<!-- <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script> -->
+<!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+{% endblock %}

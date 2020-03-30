@@ -1,0 +1,267 @@
+{% extends 'rest_adv/base.html' %} {% load staticfiles %} {% block title_block %} Login {% endblock %} {% block css_block %}
+<style>
+    /* restaurant list */
+    
+    .l-restaurant {
+        display: flex;
+    }
+    
+    .l-restaurant__ul {
+        padding: 10px 0;
+        margin: 0;
+    }
+    
+    .m-restaurant__ul {
+        list-style: none;
+    }
+    
+    .l-restaurant__li {
+        background-color: ivory;
+        display: flex;
+        /* justify-content: space-between; */
+        align-items: center;
+        height: 300px;
+    }
+    
+    .m-restaurant__li {
+        list-style: none;
+    }
+    
+    .l-restaurant__cover {
+        width: 30%;
+    }
+    
+    .m-restaurant__coverimg {
+        width: 100%;
+    }
+    
+    .l-restaurant__description {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+    }
+    
+    .m-restaurant__description {
+        width: 70%;
+        background-color: white;
+    }
+    
+    .l-restaurant__title {
+        margin-bottom: 10px;
+    }
+    
+    .m-restaurant__title {
+        font-size: 36px;
+        font-weight: bold;
+    }
+    
+    .m-restaurant__p {
+        font-size: 20px;
+        /* color:; */
+        width: 100%;
+        /* overflow: hidden; */
+        height: 100%;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
+    
+    .m-restaurant__buttons {
+    }
+    
+    .l-restaurant__buttons {
+        display: flex;
+        justify-content: flex-end;
+        /* align-items: flex-end; */
+        align-items: baseline;
+    }
+    .m-restaurant__button {
+        font-size: 16px;
+    }
+    .l-restaurant__button {
+        margin-left: 10px;
+    }
+    /* restaurant list */
+    /* review list */
+    
+    .l-review-list__ul {
+        padding: 10px 0;
+        margin: 0;
+    }
+    
+    .m-review-list__ul {
+        list-style: none;
+    }
+    
+    .l-review-list__li {
+        background-color: white;
+        display: flex;
+        /* justify-content: space-between; */
+        align-items: center;
+        height: 160px;
+        margin-bottom: 2px;
+    }
+    
+    .m-review-list__li {
+        list-style: none;
+    }
+    
+    .l-review-list__left {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .m-review-list__left {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .m-review-list__coverimg {
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+    }
+    
+    .l-review-list__username {}
+    
+    .m-review-list__username {
+        font-size: 16px;
+        font-weight: bolder;
+    }
+    
+    .l-review-list__description {
+        padding: 10px 20px;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: space-between; */
+    }
+    
+    .m-review-list__description {
+        height: 100%;
+    }
+    
+    .l-review-list__title {
+        margin-bottom: 10px;
+    }
+    
+    .m-review-list__title {
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .m-review-list__p {
+        font-size: 16px;
+        /* color:; */
+        width: 100%;
+        /* overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: normal; */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
+    
+    .l-review-list__ul {}
+    
+    .l-review-list__ul {}
+    
+    .l-review-list__ul {}
+    /* review list */
+</style>
+{% endblock %} {% block body_block %}
+<div class="col-md-12">
+    <div class="l-restaurant m-restaurant">
+        <div class="l-restaurant__description m-restaurant__description ">
+            <div class="l-restaurant__title m-restaurant__title ">{{restaurant.name}}</div>
+            <input type="text " class="m-mostliked__starrating " value="{{restaurant.rate}} " data-size="sm ">
+            <div class="l-restaurant__p m-restaurant__p ">{{restaurant.intro}}</div>
+            <div class="l-restaurant__buttons m-restaurant__buttons">
+                <a class="l-restaurant__button m-restaurant__button btn btn-default" href="{% url 'rest_adv:add_review' restaurant.slug %}" style="margin:5px;">review</a>
+                <button class="l-restaurant__button m-restaurant__button btn btn-default" id="save-restaurant">save</button>
+            </div>
+        </div>
+        <div class="l-restaurant__cover m-restaurant__cover">
+            {% if restaurant.picture %}
+            <img class="m-restaurant__coverimg" src={{restaurant.picture.url}} alt="..."> {% else %}
+            <img src={% static "images/3.jpeg" %} class="m-restaurant__coverimg alt=" Lorem Ipsum Dolor Sample Text "> {% endif %}
+        </div>
+    </div>
+    <div class="l-reviews ">
+        <h3>Reviews</h3>
+    <div class="l-review-list m-review-list ">
+        <ul class="l-review-list__ul m-review-list__ul ">
+            {% for review in reviews %}
+            <li class="l-review-list__li m-review-list__li ">
+                <div class="m-review-list__left l-review-list__left ">
+                    <div class="l-review-list__cover m-review-list__cover ">
+                        {% if review.user.profile.picture %}
+                        <img class="m-review-list__coverimg " src={{review.user.profile.picture.url}} alt="... "> {% else %}
+                        <img src={% static "images/3.jpeg " %} class="m-review-list__coverimg alt=" Lorem Ipsum Dolor Sample Text "> {% endif %}
+        </div>
+        <div class="l-review-list__username m-review-list__username">
+            {{review.user.username}}
+        </div>
+    </div>
+    <div class="l-review-list__description m-review-list__description ">
+        <div class="l-review-list__title m-review-list__title ">{{review.name}}</div>
+        <input type="text " class="m-mostliked__starrating " value="{{review.rate}} " data-size="sm ">
+        <div class="l-reivew-list__createat m-reivew-list__createat">Reviewed at {{review.createdAt}}</div>
+        <div class="l-review-list__p m-review-list__p ">{{review.message}}</div>
+    </div>
+    </li>
+    {% endfor %}
+    </ul>
+</div>
+</div>
+</div>
+
+{% endblock %} {% block js_block %}
+<script type="text/javascript ">
+    $('.carousel').carousel({
+        interval: 2000
+    })
+
+    $(".m-mostliked__starrating ").rating({
+        min: 1,
+        max: 5,
+        // step: 1,
+        // size: 'lg',
+        readonly: true,
+        displayOnly: true,
+        hoverEnabled: false,
+        starCaptions: function(val) {
+            return val + ' stars';
+        }
+    });
+
+    $("#save-restaurant").click(function(e) {
+            let csrf = $('input[name="csrfmiddlewaretoken"]').val();
+            console.log('saving restaurant ...');
+            let url = "{% url 'rest_adv:save_restaurant' %}"
+
+            $.ajax({
+                url: url,
+                data: {
+                    'csrfmiddlewaretoken': csrf,
+                    'id': "{{restaurant.id}}"
+                },
+                type: 'post',
+                cache: false,
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+                    alert(data.data);
+                },
+                error: function() {
+                    // view("异常！");    
+                    alert("Error!");
+                }
+            });
+        });
+</script>
+{% endblock %}

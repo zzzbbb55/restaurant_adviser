@@ -1,0 +1,80 @@
+{% extends 'rest_adv/base.html' %} {% load staticfiles %} {% block title_block %} Login {% endblock %} {% block css_block %}
+<style>
+    /* left */
+    
+    .l-profile__left{
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+    .m-profile__left{
+        background-color: white;
+    }
+    .l-sidebar__a {
+        margin-bottom: 16px;
+    }
+    .m-sidebar__a {
+        display: block;
+        font-size: 24px;
+        font-weight: bold;
+        color: black;
+    }
+    .m-sidebar__a:hover {
+        color: black;
+    }
+    /* left */
+    /* right */
+    .l-profile {
+        display: flex;
+        padding: 20px;
+    }
+    .m-profile {
+        background-color: white;
+    }
+
+    .m-profile__img {
+        width: 200px;
+    }
+
+    .l-profile__right {
+        margin-left: 20px;
+    }
+    .m-profile__right {
+        width: 100%;
+    }
+
+    /* right */
+</style>
+{% endblock %} {% block body_block %}
+<div class="col-md-3">
+    <div class="l-profile__left m-profile__left">
+        <a class="m-sidebar__a l-sidebar__a" href="{% url 'rest_adv:my_profile' %}">My Info</a>
+        <a class="m-sidebar__a l-sidebar__a" href="{% url 'rest_adv:my_collections' %}">My Collections</a>
+        <a class="m-sidebar__a l-sidebar__a" href="{% url 'rest_adv:my_reviews' %}">My Reviews</a>
+    </div>
+</div>
+<div class="col-md-9">
+    <form class="l-profile m-profile" method="POST" action="/rest_adv/update_my_profile" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="l-profile__image m-profile__image">
+            {% if user.profile.picture %}
+            <img class="m-profile__img" src={{user.profile.picture.url}} alt="..."> {% else %}
+            <img src={% static "images/3.jpeg" %} class="m-profile__img alt=" Lorem Ipsum Dolor Sample Text "> {% endif %}
+            <input type="file" name="picture">
+        </div>
+        <div class="l-profile__right m-profile__right">
+            <label for="">Username</label>
+            <input name="username" class="l-profile__name m-profile__name form-control" type="text" value="{{user.username}}" >
+            <label for="">website</label>
+            <div class="l-profile__website m-profile__website"></div>
+            <input name="website" class="l-profile__name m-profile__name form-control" type="text" value="{{user.profile.website}}" >
+            <button class="btn btn-outline-success" type="submit">Update</button>
+        </div>
+    </form>
+</div>
+</div>
+
+{% endblock %} {% block js_block %}
+<script type="text/javascript ">
+</script>
+{% endblock %}
